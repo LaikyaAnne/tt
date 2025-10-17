@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+// Function to perform sentinel linear search
+int sentinelLinearSearch(int arr[], int size, int key) {
+    int last = arr[size - 1];
+    arr[size - 1] = key;  // Set sentinel
+
+    int i = 0;
+    while (arr[i] != key) {
+        i++;
+    }
+
+    arr[size - 1] = last;  // Restore last element
+
+    if (i < size - 1 || arr[size - 1] == key) {
+        return i;  // Found at index i
+    }
+
+    return -1; // Not found
+}
+
+int main() {
+    int arr[] = {5, 8, 12, 20, 7, 3, 9};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int key;
+
+    printf("Enter the element to search: ");
+    scanf("%d", &key);
+
+    int index = sentinelLinearSearch(arr
