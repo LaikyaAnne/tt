@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+void leftRotateByOne(int arr[], int size) {
+    int first = arr[0];  // Store the first element
+
+    for (int i = 0; i < size - 1; i++) {
+        arr[i] = arr[i + 1];  // Shift elements to the left
+    }
+
+    arr[size - 1] = first;  // Move first element to the end
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Original array:\n");
+    printArray(arr, size);
+
+    leftRotateByOne(arr, size);
+
+    printf("Array after one left rotation:\n");
+    printArray(arr, size);
+
+    return 0;
+}
