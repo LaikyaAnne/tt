@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+void recursiveFunction(int n) {
+    static int depth = 0;  // static variable retains its value between calls
+
+    depth++;  // increase depth each time function is called
+    printf("Entering level %d (n = %d)\n", depth, n);
+
+    if (n > 1)
+        recursiveFunction(n - 1);  // recursive call
+
+    printf("Exiting level %d (n = %d)\n", depth, n);
+    depth--;  // decrease depth when returning
+}
+
+int main() {
+    int num;
+    printf("Enter a number: ");
+    scanf("%d", &num);
+
+    recursiveFunction(num);
+
+    return 0;
+}
