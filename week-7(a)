@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_EMPLOYEES 100
+
+// Define Employee structure
+struct Employee {
+    int id;
+    char name[50];
+    float salary;
+};
+
+// Function to add a new employee
+void addEmployee(struct Employee employees[], int *count) {
+    if (*count >= MAX_EMPLOYEES) {
+        printf("Cannot add more employees. Limit reached.\n");
+        return;
+    }
+
+    struct Employee newEmployee;
+
+    printf("Enter Employee ID: ");
+    scanf("%d", &newEmployee.id);
+
+    printf("Enter Employee Name: ");
+    scanf(" %[^\n]s", newEmployee.name);  // Read string with spaces
+
+    printf("Enter Employee Salary: ");
+    scanf("%f", &newEmployee.salary);
+
+    employees[*count] = newEmployee;
+    (*count)++;
+
+    printf("Employee added successfully.\n");
+}
+
+// Function to display all employees
+void displayEmployees(struct Employee employees[], int count) {
+    if (count == 0) {
+        printf("No employee records to display.\n");
+        return;
+    }
+
+    printf("\n%-10s %-20s %-10s\n", "ID", "Name", "Salary");
+    printf("-------------------------------------------\n");
+
+    for (int i = 0; i < count; i++) {
+        printf("%-10d %-20s %-10.2f\n", employees[i].id, employees[i].name, employees[i].salary);
+    }
+}
+
+// Function to search employee by ID
+void searchEmployee(struct Employee employees[], int count) {
+    int id;
+    printf("Enter Employee ID to search: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < count; i++) {
+        if (employees[i].id == id) {
+            printf("\nEmployee Found:\n");
+            printf("ID: %d\n", employees[i].id);
+
