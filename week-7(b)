@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <string.h>
+
+// Union for account-specific info
+union AccountType {
+    float interestRate;    // For savings account
+    float overdraftLimit;  // For current account
+};
+
+// Structure for bank account
+struct BankAccount {
+    int accountNumber;
+    char name[50];
+    char type; // 'S' for Savings, 'C' for Current
+    union AccountType details;
+};
+
+// Function to display account info
+void displayAccount(struct BankAccount acc) {
+    printf("\nAccount Number: %d\n", acc.accountNumber);
+    printf("Name: %s\n", acc.name);
+    printf("Account Type: %c\n", acc.type);
+
+    if (acc.type == 'S' || acc.type == 's') {
+        printf("Interest Rate: %.2f%%\n", acc.details.interestRate);
+    } else if (acc.type == 'C' || acc.type == 'c') {
+        printf("Overdraft Limit: %.2f\n", acc.details.overdraftLimit);
+    } else {
+        printf("Invalid account type.\n");
+    }
+}
+
+int main() {
+    struct BankAccount acc;
+
+    printf("Enter Account Number: ");
+    scanf("%d", &acc.accountNumber);
+
+    printf("Enter Account Holder Name: ");
+    scanf(" %[^\n]s", acc.name); // Read full name with spaces
+
+    printf("Enter Account Type (S for Savings / C for Current): ");
+    scanf(" %c", &acc.type);
+
+    if (acc.type == 'S' || acc.type == 's') {
+        printf("Enter Interest Rate (in %%): ");
+        scanf("%f", &acc.details.interestRate);
+    } else if (acc.type == 'C' || acc.type == 'c') {
+        printf("Enter Overdraft Limit: ");
+        scanf("%f", &acc.details.overdraftLimit);
+    } else {
+        printf("Invalid account type entered.\n");
+        return 1;
+    }
+
+    displayAccount(acc);
+
+    return 0;
+}
