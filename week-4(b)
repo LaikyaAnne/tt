@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Student {
+    int id;
+    char name[50];
+    float marks;
+};
+
+void addRecords(FILE *fp) {
+    struct Student s;
+    char choice;
+
+    do {
+        printf("Enter student ID: ");
+        scanf("%d", &s.id);
+        getchar(); // consume newline
+        printf("Enter student name: ");
+        fgets(s.name, sizeof(s.name), stdin);
+        s.name[strcspn(s.name, "\n")] = '\0'; // remove newline
+        printf("Enter student marks: ");
+        scanf("%f", &s.marks);
+
+        fwrite(&s, sizeof(s), 1, fp);
+
+        printf("Add another record? (y/n): ");
+        getchar(); // consume newline
+        scanf("%c", &choice);
+    } while (choice == 'y' || choice == 'Y');
+}
+
+void readRecords(FILE *fp) {
+    struct Student s;
+
+    rewind(fp); // move file pointer to beginning
+    printf("\nStudent Records:\n");
+    printf("ID\tName\t\tMarks\n");
+    printf("--------------------------------\n");
+
+    while (fread(&s, sizeof(s), 1, fp) == 1) {
