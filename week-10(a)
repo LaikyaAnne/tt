@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+// Function to swap two elements
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Function to generate a random pivot and partition the array
+int partition(int arr[], int low, int high) {
+    // Random pivot index between low and high
+    int pivotIndex = low + rand() % (high - low + 1);
+    
+    // Move pivot to end
+    swap(&arr[pivotIndex], &arr[high]);
+
+    int pivot = arr[high];
+    int i = low - 1;
+
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+
+    swap(&arr[i + 1], &arr[high]);
+    return i + 1;
+}
+
+// Quicksort function
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+int main() {
+    srand(time(0));  // Seed random number generator
+
+    int arr[] = {24, 97, 40, 67, 12, 88, 55};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Original array:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    quickSort(arr, 0, n - 1);
+
+    printf("Sorted array:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
